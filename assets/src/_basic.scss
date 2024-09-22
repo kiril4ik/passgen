@@ -1,0 +1,24 @@
+/* Reset Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* Body Styles */
+body {
+  display: block;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  font-family: "Montserrat", sans-serif;
+}
+/* Disable scrolling */
+body.no-scroll {
+  overflow: hidden;
+}
+/* Main container styles */
+.main-container {
+  margin: 60px 0 0 0;
+}
+.container {
+  padding: 40px;
+}

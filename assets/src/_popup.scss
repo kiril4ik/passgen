@@ -1,0 +1,93 @@
+/* Popup Modal Styles */
+.popup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 14, 49, 0.9);;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+
+  &.active {
+    display: flex;
+  }
+  .popup-content {
+    background-color: $main-bg-color;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    color: $text-color;
+    width: 90%;
+    max-width: 400px;
+    border: 1px solid $text-color;
+
+    h2 {
+      margin-bottom: 30px;
+    }
+    p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+    button {
+      &#generate-another {
+        width: 100%;
+        height: 50px;
+        margin-bottom: 10px;
+        background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        color: $text-color;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      &#modify-settings {
+        background: none;
+        border: none;
+        color: $text-color;
+        text-decoration: underline;
+        cursor: pointer;
+        font: inherit; /* Чтобы сохранить шрифт, как у основного текста */
+        padding: 0;
+      }
+    }
+    .dots-wait-animate {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        width: 10px;
+        height: 10px;
+        margin: 0 5px;
+        background-color: $text-color;
+        border-radius: 50%;
+        display: inline-block;
+        animation: bounce 1.5s infinite ease-in-out;
+      }
+      span:nth-child(1) {
+        animation-delay: 0s;
+      }
+      span:nth-child(2) {
+        animation-delay: 0.3s;
+      }
+      span:nth-child(3) {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes bounce {
+        0%, 100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+    }
+  }
+}

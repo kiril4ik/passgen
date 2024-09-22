@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Advanced Password Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="assets/main.css">
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-container">
+    <a href="/" class="nav-logo">
+      <img src="assets/img/logo.png" alt="PassGen">
+    </a>
+    <ul class="nav-menu">
+      <li class="nav-item">
+        <a href="#easy" class="nav-link">Easy Password</a>
+      </li>
+      <li class="nav-item">
+        <a href="#password-generator" class="nav-link">Advanced Password Generator</a>
+      </li>
+      <li class="nav-item">
+        <a href="#features" class="nav-link">Features</a>
+      </li>
+      <li class="nav-item">
+        <a href="#about" class="nav-link">About</a>
+      </li>
+    </ul>
+    <div class="nav-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
+  </div>
+</nav>
+<div class="main-container">
+  <!-- Popup Modal -->
+  <div id="popup" class="popup">
+    <div class="popup-content">
+      <h2>Your Secure Password</h2>
+      <p id="popup-password">
+        <div class="dots-wait-animate">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </p>
+      <p>Password automatically copied to clipboard.</p>
+      <button id="generate-another">Generate Another</button>
+      <button id="modify-settings">More Settings</button>
+    </div>
+  </div>
+  <!-- Advanced Password Generation Section -->
+  <section id="password-generator">
+    <div class="container">
+      <h2 class="title">Advanced Password Generator</h2>
+      <div class="result">
+        <div class="result__viewbox" id="result">
+          CLICK GENERATE - CLICK GENERATE
+        </div>
+        <button id="copy-btn"><i class="far fa-copy"></i></button>
+      </div>
+      <div class="settings">
+        <div class="length range__slider" data-min="4" data-max="32">
+          <input id="slider" type="range" min="4" max="32" value="16" />
+        </div>
+        <div class="settings-symbols">
+          <div class="setting">
+            <input type="checkbox" id="uppercase" checked />
+            <label for="uppercase">Uppercase</label>
+          </div>
+          <div class="setting">
+            <input type="checkbox" id="lowercase" checked />
+            <label for="lowercase">Lowercase</label>
+          </div>
+          <div class="setting">
+            <input type="checkbox" id="number" checked />
+            <label for="number">Numbers</label>
+          </div>
+          <div class="setting">
+            <input type="checkbox" id="symbol" />
+            <label for="symbol">Symbols</label>
+          </div>
+        </div>
+      </div>
+      <button class="btn generate" id="generate">ReGenerate</button>
+    </div>
+  </section>
+  <!-- About Section -->
+  <section id="about">
+    <div class="container">
+      <h2>About</h2>
+      <p>
+        This password generator securely creates passwords on both the backend and frontend.
+        Your password is automatically copied to your clipboard when you open the website.
+      </p>
+    </div>
+  </section>
+</div>
+<footer>
+  <p>&copy; Kyrylo Butskyi - 2024</p>
+</footer>
+<script src="assets/main.js"></script>
+</body>
+</html>

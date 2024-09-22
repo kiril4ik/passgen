@@ -1,0 +1,85 @@
+/* Sticky Navigation Bar Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: $main-bg-color;
+  z-index: 999;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+
+  .nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+  }
+  .nav-logo {
+    color: $main-bg-color;
+    font-size: 1.5rem;
+    text-decoration: none;
+
+    img {
+      margin-top: 6px;
+      max-height: 50px;
+    }
+  }
+  .nav-menu {
+    list-style: none;
+    display: flex;
+  }
+  .nav-item {
+    margin-left: 20px;
+  }
+  .nav-link {
+    color: $text-color;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  .nav-link:hover {
+    color: $text-hover-color;
+  }
+  .nav-toggle {
+    display: none;
+  }
+}
+
+/* Responsive Navigation */
+@media screen and (max-width: 768px) {
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    background: $main-bg-color;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.4);
+
+    &.active {
+      display: flex;
+    }
+    .nav-item {
+      margin: 0;
+    }
+    .nav-link {
+      padding: 15px 20px;
+      width: 100%;
+    }
+    .nav-toggle {
+      display: block;
+      cursor: pointer;
+
+      .bar {
+        width: 25px;
+        height: 3px;
+        background-color: $text-color;
+        margin: 5px 0;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+}
