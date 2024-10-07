@@ -1,138 +1,197 @@
-// Password Generator Functions
-function getRandomLower() {
-    return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
-}
-
-function getRandomUpper() {
-    return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
-}
-
-function getRandomNumber() {
-    return String.fromCharCode(Math.floor(Math.random() * 10) + 48);
-}
-
-function getRandomSymbol() {
-    const symbols = '!@#$%^&*()_+{}[]=<>/,.';
-    return symbols[Math.floor(Math.random() * symbols.length)];
-}
-
-// Generate Password Function
-function generatePassword(length, upper, lower, number, symbol) {
-    let generatedPassword = '';
-    const typesCount = upper + lower + number + symbol;
-    const typesArr = [{ upper }, { lower }, { number }, { symbol }].filter(item => Object.values(item)[0]);
-
-    if (typesCount === 0) {
-        return 'Please select at least one option';
+class CookieManager {
+    static getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
     }
 
-    for (let i = 0; i < length; i += typesCount) {
-        typesArr.forEach(type => {
-            const funcName = Object.keys(type)[0];
-            generatedPassword += randomFunc[funcName]();
+    static setCookie(name, value, days = 365) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Default to 1 year
+        const expires = `expires=${date.toUTCString()}`;
+        document.cookie = `${name}=${value}; ${expires}; path=/`;
+    }
+
+    static deleteCookie(name) {
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    }
+}
+
+// OptionsManager class to manage password generation options and update the UI
+class OptionsManager {
+    constructor() {
+        this.length = parseInt(CookieManager.getCookie('passwordLength')) || 16;
+        this.useLowercase = this.getBooleanCookie('useLowercase', true); // Default to true if cookie doesn't exist
+        this.useUppercase = this.getBooleanCookie('useUppercase', true);
+        this.useNumbers = this.getBooleanCookie('useNumbers', true);
+        this.useSymbols = this.getBooleanCookie('useSymbols', false); // Default to false
+    }
+
+    // Utility function to get a boolean cookie
+    getBooleanCookie(cookieName, defaultValue) {
+        const cookieValue = CookieManager.getCookie(cookieName);
+        return cookieValue === null ? defaultValue : cookieValue === 'true';
+    }
+
+    // Get options
+    getOptions() {
+         return {
+            length: this.length,
+            useLowercase: this.useLowercase,
+            useUppercase: this.useUppercase,
+            useNumbers: this.useNumbers,
+            useSymbols: this.useSymbols
+        };
+    }
+
+    // Update and save options to cookies
+    updateSettings() {
+        this.length = parseInt(document.getElementById('slider').value);
+        this.useLowercase = document.getElementById('lowercase').checked;
+        this.useUppercase = document.getElementById('uppercase').checked;
+        this.useNumbers = document.getElementById('number').checked;
+        this.useSymbols = document.getElementById('symbol').checked;
+
+        // Save the updated settings to cookies
+        CookieManager.setCookie('passwordLength', this.length);
+        CookieManager.setCookie('useLowercase', this.useLowercase);
+        CookieManager.setCookie('useUppercase', this.useUppercase);
+        CookieManager.setCookie('useNumbers', this.useNumbers);
+        CookieManager.setCookie('useSymbols', this.useSymbols);
+    }
+
+    // Update the UI with saved settings
+    updateUI(passwordGenerator) {
+        const { length, useLowercase, useUppercase, useNumbers, useSymbols } = this.getOptions();
+
+        document.getElementById('slider').value = length;
+        document.getElementById('lowercase').checked = useLowercase;
+        document.getElementById('uppercase').checked = useUppercase;
+        document.getElementById('number').checked = useNumbers;
+        document.getElementById('symbol').checked = useSymbols;
+
+        // Generate an initial password based on these settings
+        passwordGenerator.generatePassword().then((initialPassword) => {
+            document.getElementById('result').textContent = initialPassword;
+            document.getElementById('popup-password').textContent = initialPassword;
         });
     }
-
-    return generatedPassword.slice(0, length);
 }
 
-// Object of generator functions
-const randomFunc = {
-    upper: getRandomUpper,
-    lower: getRandomLower,
-    number: getRandomNumber,
-    symbol: getRandomSymbol,
-};
+class PasswordGenerator {
+    constructor() {
+        this.salt = '9f1d1b9e0b2b573fdd45822cd2d4f7044c6f8962cfb87e912a221d3e2f88c828';
 
-// DOM Elements
-const resultEl = document.getElementById('result');
-const lengthEl = document.getElementById('length');
-const uppercaseEl = document.getElementById('uppercase');
-const lowercaseEl = document.getElementById('lowercase');
-const numbersEl = document.getElementById('numbers');
-const symbolsEl = document.getElementById('symbols');
-const generateBtn = document.getElementById('generate');
-const copyBtn = document.getElementById('copy-btn');
+        // Initialize the options manager
+        this.optionsManager = new OptionsManager();
 
-// Event Listeners
-generateBtn.addEventListener('click', () => {
-    const length = +lengthEl.value;
-    const hasUpper = uppercaseEl.checked;
-    const hasLower = lowercaseEl.checked;
-    const hasNumber = numbersEl.checked;
-    const hasSymbol = symbolsEl.checked;
+        // Load salt from backend
+        // this.loadSalt();
 
-    resultEl.value = generatePassword(length, hasUpper, hasLower, hasNumber, hasSymbol);
-});
-
-copyBtn.addEventListener('click', () => {
-    const textarea = document.createElement('textarea');
-    const password = resultEl.value;
-
-    if (!password) {
-        return;
+        // Load options and update the UI
+        this.optionsManager.updateUI(this);
     }
 
-    textarea.value = password;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
-    alert('Password copied to clipboard!');
-});
-
-// Popup Functionality
-window.addEventListener('load', () => {
-    const popup = document.getElementById('popup');
-    const popupPasswordEl = document.getElementById('popup-password');
-    const generateAnotherBtn = document.getElementById('generate-another');
-    const modifySettingsBtn = document.getElementById('modify-settings');
-
-    // Generate password on load
-    const length = +lengthEl.value;
-    const hasUpper = uppercaseEl.checked;
-    const hasLower = lowercaseEl.checked;
-    const hasNumber = numbersEl.checked;
-    const hasSymbol = symbolsEl.checked;
-
-    const password = generatePassword(length, hasUpper, hasLower, hasNumber, hasSymbol);
-    popupPasswordEl.textContent = password;
-    copyToClipboard(password);
-
-    // Show popup
-    popup.style.display = 'block';
-
-    generateAnotherBtn.addEventListener('click', () => {
-        const newPassword = generatePassword(length, hasUpper, hasLower, hasNumber, hasSymbol);
-        popupPasswordEl.textContent = newPassword;
-        copyToClipboard(newPassword);
-    });
-
-    modifySettingsBtn.addEventListener('click', () => {
-        popup.style.display = 'none';
-    });
-});
-
-// Function to copy password to clipboard
-function copyToClipboard(password) {
-    const textarea = document.createElement('textarea');
-
-    if (!password) {
-        return;
+    async loadSalt() {
+        try {
+            const response = await fetch('salt_generator.php');
+            const data = await response.json();
+            this.salt = data.salt;
+        } catch (error) {
+            console.error('Error fetching salt:', error);
+        }
     }
 
-    textarea.value = password;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    textarea.remove();
+    async generatePassword() {
+        const { length, useLowercase, useUppercase, useNumbers, useSymbols } = this.optionsManager.getOptions();
+        const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+        const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const numbers = '0123456789';
+        const symbols = '!@#$%^&*()_+[]{}|;:,.<>?';
+
+        let availableCharacters = '';
+
+        if (useLowercase) availableCharacters += lowercase;
+        if (useUppercase) availableCharacters += uppercase;
+        if (useNumbers) availableCharacters += numbers;
+        if (useSymbols) availableCharacters += symbols;
+
+        if (!availableCharacters) {
+            throw new Error('No character types selected');
+        }
+
+        let password = '';
+        for (let i = 0; i < length; i++) {
+            const randomIndex = await this.getSaltedRandomIndex(availableCharacters.length, i);
+            password += availableCharacters[randomIndex];
+        }
+
+        return password;
+    }
+
+    // Get a random index influenced by the salt and iteration index
+    async getSaltedRandomIndex(charSetLength, iteration) {
+        const randomValue = Math.random();
+        const saltedRandomValue = await this.applySaltToRandomValue(randomValue, iteration);
+
+        return Math.floor(saltedRandomValue * charSetLength);;
+    }
+
+    // Use salt and iteration to influence the random value
+    async applySaltToRandomValue(randomValue, iteration) {
+        const saltedInput = this.salt + iteration; // Combine the salt and iteration for each loop
+        const hashBuffer = await this.hashString(saltedInput);
+
+        // Convert the hashBuffer to a number and use it to influence the random value
+        let saltedInfluence = 0;
+        for (let i = 0; i < hashBuffer.length; i++) {
+            saltedInfluence += hashBuffer[i];
+        }
+
+        // Mix the randomValue with saltedInfluence and return a value between 0 and 1
+        return (randomValue + (saltedInfluence % 1000) / 1000) % 1;
+    }
+
+    // Hash a string asynchronously using SHA-256 (for more complexity)
+    async hashString(str) {
+        const encoder = new TextEncoder();
+        const data = encoder.encode(str);
+        const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+        return new Uint8Array(hashBuffer); // Convert the buffer to a byte array
+    }
 }
 
-// Mobile Menu Toggle Functionality
-const mobileMenu = document.getElementById('mobile-menu');
-const navMenu = document.querySelector('.nav-menu');
+// Initialize the password generator
+const passwordGenerator = new PasswordGenerator();
 
-mobileMenu.addEventListener('click', () => {
-    mobileMenu.classList.toggle('active');
-    navMenu.classList.toggle('active');
+// Event Listeners for settings changes
+document.getElementById('slider').addEventListener('input', () => {
+    passwordGenerator.optionsManager.updateSettings();
+    passwordGenerator.optionsManager.updateUI(passwordGenerator);
+});
+
+document.getElementById('lowercase').addEventListener('change', () => {
+    passwordGenerator.optionsManager.updateSettings();
+    passwordGenerator.optionsManager.updateUI(passwordGenerator);
+});
+
+document.getElementById('uppercase').addEventListener('change', () => {
+    passwordGenerator.optionsManager.updateSettings();
+    passwordGenerator.optionsManager.updateUI(passwordGenerator);
+});
+
+document.getElementById('number').addEventListener('change', () => {
+    passwordGenerator.optionsManager.updateSettings();
+    passwordGenerator.optionsManager.updateUI(passwordGenerator);
+});
+
+document.getElementById('symbol').addEventListener('change', () => {
+    passwordGenerator.optionsManager.updateSettings();
+    passwordGenerator.optionsManager.updateUI(passwordGenerator);
+});
+
+document.getElementById('generate').addEventListener('click', () => {
+    passwordGenerator.optionsManager.updateSettings();
+    passwordGenerator.optionsManager.updateUI(passwordGenerator);
 });
