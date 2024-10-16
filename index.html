@@ -47,7 +47,9 @@
         </div>
       </p>
       <p>Password automatically copied to clipboard.</p>
-      <button id="generate-another">Generate Another</button>
+      <button id="generate-another">
+        <i class="fas fa-sync-alt"></i>Generate
+      </button>
       <button id="modify-settings">More Settings</button>
     </div>
   </div>
@@ -63,7 +65,9 @@
       </div>
       <div class="settings">
         <div class="length range__slider" data-min="4" data-max="32">
+          <div class="length__title field-title" data-length='0'></div>
           <input id="slider" type="range" min="4" max="32" value="16" />
+          <div id="tooltip" class="tooltip">50</div>
         </div>
         <div class="settings-symbols">
           <div class="setting">
@@ -84,7 +88,9 @@
           </div>
         </div>
       </div>
-      <button class="btn generate" id="generate">ReGenerate</button>
+      <button id="generate" class="btn generate">
+        <i class="fas fa-sync-alt"></i> Generate
+      </button>
     </div>
   </section>
   <!-- About Section -->
@@ -101,6 +107,7 @@
 <footer>
   <p>&copy; Kyrylo Butskyi - 2024</p>
 </footer>
+<script src="assets/dist/zxcvbn.js"></script>
 <script src="assets/main.js"></script>
 </body>
 </html>

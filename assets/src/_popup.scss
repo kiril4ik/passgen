@@ -26,6 +26,9 @@
     max-width: 400px;
     border: 1px solid $text-color;
 
+    .hidden {
+      display: none;
+    }
     h2 {
       margin-bottom: 30px;
     }
@@ -45,6 +48,11 @@
         font-size: 1rem;
         font-weight: bold;
         cursor: pointer;
+        text-transform: uppercase;
+
+        i {
+          margin-right: 10px;
+        }
       }
       &#modify-settings {
         background: none;

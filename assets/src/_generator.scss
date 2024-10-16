@@ -10,12 +10,11 @@
         max-width: 100%;
         background: $main-bg-color;
         border-radius: 10px;
-        padding: 20px 25px;
+        padding: 25px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.45),
         0 4px 8px rgba(0, 0, 0, 0.35),
         0 8px 12px rgba(0, 0, 0, 0.15);
         color: $text-color;
-
         h2.title {
             font-size: 1.75rem;
             margin-bottom: 30px;
@@ -39,147 +38,171 @@
             word-break: break-all;
             padding: 0 50px 0 10px;
         }
-
     }
     /* Length range select */
     .range__slider {
         position: relative;
         width: 100%;
-        height: calc(65px - 10px);
+        height: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
-    }
-    .range__slider::before, .range__slider::after {
-        position: absolute;
-        color: #fff;
-        font-size: 0.9rem;
-        font-weight: bold;
-    }
-    .range__slider::before {
-        content: attr(data-min);
-        left: 10px;
-    }
-    .range__slider::after {
-        content: attr(data-max);
-        right: 10px;
-    }
-    .range__slider .length__title::after {
-        content: attr(data-length);
-        position: absolute;
-        right: -16px;
-        font-variant-numeric: tabular-nums;
-        color: #fff;
-    }
-    #slider {
-        -webkit-appearance: none;
-        width: calc(100% - (70px));
-        height: 2px;
-        border-radius: 5px;
-        background: rgba(255, 255, 255, 0.314);
-        outline: none;
-        padding: 0;
-        margin: 0;
-        cursor: pointer;
-    }
-    #slider::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background: #fff;
-        cursor: pointer;
-        transition: all 0.15s ease-in-out;
-    }
-    #slider::-webkit-slider-thumb:hover {
-        background: #d4d4d4;
-        transform: scale(1.2);
-    }
-    #slider::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        border: 0;
-        border-radius: 50%;
-        background: #fff;
-        cursor: pointer;
-        transition: background 0.15s ease-in-out;
-    }
-    #slider::-moz-range-thumb:hover {
-        background: #d4d4d4;
+        border-radius: $field-border-radius;
+        padding: 20px 0 40px 0;
+
+        &::before,
+        &::after {
+            position: absolute;
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+        &::before {
+            content: attr(data-min);
+            left: 10px;
+        }
+        &::after {
+            content: attr(data-max);
+            right: 10px;
+        }
+        .tooltip {
+            position: absolute;
+            top: -30px; /* Position above the thumb */
+            background-color: #5d68e2;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            transform: translateX(-50%); /* Center the tooltip */
+            display: none; /* Initially hidden */
+            pointer-events: none;
+
+            &::before {
+                content: '';
+                position: absolute;
+                bottom: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 8px;
+                border-style: solid;
+                border-color: rgba(93, 104, 226, 0.9) transparent transparent transparent;
+            }
+        }
+        #slider {
+            -webkit-appearance: none;
+            width: calc(100% - 70px);
+            height: $range-track-height;
+            border-radius: 5px;
+            background: $range-track-color;
+            outline: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: $range-handle-size;
+                height: $range-handle-size;
+                border-radius: 50%;
+                background: $range-handle-color;
+                cursor: pointer;
+                transition: all 0.15s ease-in-out;
+                &:hover {
+                    background: $range-handle-color-hover;
+                    transform: scale(1.2);
+                }
+            }
+            &:active::-webkit-slider-thumb {
+                background: $range-handle-color-hover;
+            }
+        }
+        &:hover .tooltip {
+            display: block; /* Show tooltip when hovering over slider */
+        }
     }
     /*Generation settings*/
     .settings {
         background: rgba(255, 255, 255, 0.08);
         border-radius: 8px;
-        padding: 10px;
-        margin-bottom: 8px
-    }
-    .settings-symbols {
-        position: relative;
-        height: auto;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
+        padding: 20px 10px 25px 10px;
+        margin-bottom: 30px;
 
-        .setting {
+        .settings-symbols {
             position: relative;
-            width: 50%;
-            height: 55px;
-            /*height: calc(65px - 10px);*/
-            /*background: rgba(255, 255, 255, 0.08);*/
-            border-radius: 8px;
-            display: block;
-            /*padding: 10px 25px;*/
-            color: #fff;
-            /*margin-bottom: 8px;*/
+            height: auto;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
 
-            input {
-                opacity: 0;
-                position: absolute;
-            }
-            input + label {
-                user-select: none;
-            }
-            input + label::before, input + label::after {
-                content: "";
-                position: absolute;
-                transition: 150ms cubic-bezier(0.24, 0, 0.5, 1);
-                transform: translateY(-50%);
-                top: 40px;
-                right: 10px;
-                cursor: pointer;
-            }
-            input + label::before {
-                height: 30px;
-                width: 50px;
-                border-radius: 30px;
-                background: rgba(214, 214, 214, 0.434);
-            }
-            input + label::after {
-                height: 24px;
-                width: 24px;
-                border-radius: 60px;
-                right: 32px;
-                background: #fff;
-            }
-            input:checked + label:before {
-                background: #5d68e2;
-                transition: all 150ms cubic-bezier(0, 0, 0, 0.1);
-            }
-            input:checked + label:after {
-                right: 14px;
-            }
-            input:focus + label:before {
-                box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75);
-            }
-            input:disabled + label:before, input:disabled + label:after {
-                cursor: not-allowed;
-            }
-            input:disabled + label:before {
-                background: #4f4f6a;
-            }
-            input:disabled + label:after {
-                background: #909090;
+            .setting {
+                position: relative;
+                width: 77px;
+                height: 60px;
+                border-radius: 8px;
+                display: block;
+                color: #fff;
+                text-align: center;
+
+                input {
+                    opacity: 0;
+                    position: absolute;
+                }
+
+                input + label {
+                    user-select: none;
+                }
+
+                input + label::before, input + label::after {
+                    content: "";
+                    position: absolute;
+                    transition: 150ms cubic-bezier(0.24, 0, 0.5, 1);
+                    transform: translateY(-50%);
+                    top: 40px;
+                    left: 10px;
+                    cursor: pointer;
+                }
+
+                input + label::before {
+                    height: 30px;
+                    width: 50px;
+                    border-radius: 30px;
+                    background: rgba(214, 214, 214, 0.434);
+                }
+
+                input + label::after {
+                    height: 24px;
+                    width: 24px;
+                    border-radius: 60px;
+                    left: 14px;
+                    background: #fff;
+                }
+
+                input:checked + label:before {
+                    background: #5d68e2;
+                    transition: all 150ms cubic-bezier(0, 0, 0, 0.1);
+                }
+
+                input:checked + label::after {
+                    left: 32px; /* Adjust the switch position when checked */
+                }
+
+                input:focus + label::before {
+                    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.75);
+                }
+
+                input:disabled + label::before, input:disabled + label::after {
+                    cursor: not-allowed;
+                }
+
+                input:disabled + label::before {
+                    background: #4f4f6a;
+                }
+
+                input:disabled + label::after {
+                    background: #909090;
+                }
             }
         }
     }
@@ -195,53 +218,6 @@
         font-size: 1.2rem;
         cursor: pointer;
     }
-
-    /* Range Slider Styles */
-    .length {
-        margin-bottom: 30px;
-    }
-
-    .length__title {
-        position: relative;
-        margin-bottom: 10px;
-        font-size: 0.9rem;
-        color: $text-color;
-    }
-
-    .length__title::after {
-        content: attr(data-length);
-        position: absolute;
-        right: 0;
-        font-size: 1rem;
-        color: $text-hover-color;
-    }
-
-    input[type="range"] {
-        -webkit-appearance: none;
-        width: 100%;
-        height: 8px;
-        background: rgba(255, 255, 255, 0.2);
-        outline: none;
-        border-radius: 5px;
-        overflow: hidden;
-    }
-
-    input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        width: 20px;
-        height: 20px;
-        background: $text-hover-color;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    input[type="range"]::-moz-range-thumb {
-        width: 20px;
-        height: 20px;
-        background: $text-hover-color;
-        border-radius: 50%;
-        cursor: pointer;
-    }
     /* Generate Button Styles */
     .btn.generate {
         width: 100%;
@@ -249,22 +225,26 @@
         background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         border: none;
         border-radius: 8px;
-        color: $text-color;
+        color: #fff;
         font-size: 1rem;
         font-weight: bold;
         text-transform: uppercase;
         cursor: pointer;
-        transition: transform 150ms ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: background-color 150ms ease, transform 150ms ease;
+    }
+    .btn.generate i {
+        font-size: 1.25rem;
     }
     .btn.generate:hover {
-        transform: translateY(-3%);
+        background-color: #388e3c;
+        transform: translateY(-2%);
+    }
+    .btn.generate:active {
+        transform: translateY(1%);
+        background-color: #2e7d32;
     }
 }
-
-
-
-
-
-
-
-

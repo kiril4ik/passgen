@@ -1,3 +1,14 @@
 $main-bg-color: #0a0e31;
 $text-color: #fafcdd;
 $text-hover-color: #68e0cf;
+
+$range-handle-color: rgb(255, 255, 255) !default;
+$range-handle-color-hover: rgb(212, 212, 212) !default;
+$range-handle-size: 20px !default;
+
+$range-track-color: rgba(255, 255, 255, 0.314) !default;
+$range-track-height: 2px !default;
+
+$field-color: rgba(255, 255, 255, 0.08);
+$field-height: 65px;
+$field-border-radius: 8px;
