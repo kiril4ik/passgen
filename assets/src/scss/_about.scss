@@ -1,0 +1,37 @@
+.about {
+  width: 100%;
+  background: #bcdeff;
+  color: #333;
+  padding: 4rem 3rem;
+  text-align: center;
+
+  &__content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  &__header {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+  }
+  &__text {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .about {
+    padding: 2rem 1rem;
+
+    &__header {
+      font-size: 1.5rem;
+    }
+    &__text {
+      font-size: 0.9rem;
+    }
+  }
+}

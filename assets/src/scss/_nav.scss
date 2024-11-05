@@ -47,33 +47,39 @@
   }
 }
 
-/* Responsive Navigation */
 @media screen and (max-width: 768px) {
-  .nav-menu {
-    display: none;
-    flex-direction: column;
-    background: $main-bg-color;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    width: 200px;
-    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.4);
+  .navbar {
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      background: rgba(10, 14, 49, 0.8);
+      backdrop-filter: blur(10px);
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 250px;
+      box-shadow: -2px 0 4px rgba(0, 0, 0, 0.4);
 
-    &.active {
-      display: flex;
+      &.active {
+        display: flex;
+      }
+
+      .nav-item {
+        margin: 10px;
+      }
+
+      .nav-link {
+        padding: 15px 20px;
+        width: 100%;
+      }
     }
-    .nav-item {
-      margin: 0;
-    }
-    .nav-link {
-      padding: 15px 20px;
-      width: 100%;
-    }
+
     .nav-toggle {
       display: block;
       cursor: pointer;
 
       .bar {
+        display: block;
         width: 25px;
         height: 3px;
         background-color: $text-color;

@@ -1,9 +1,8 @@
 /* Popup Modal Styles */
 .popup {
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -12,21 +11,41 @@
   background-color: rgba(10, 14, 49, 0.9);;
   z-index: 1000;
   backdrop-filter: blur(10px);
-
   &.active {
     display: flex;
   }
   .popup-content {
+    position: relative;
     background-color: $main-bg-color;
     padding: 30px;
     border-radius: 10px;
     text-align: center;
     color: $text-color;
     width: 90%;
-    max-width: 400px;
+    max-width: 420px;
     border: 1px solid $text-color;
 
-    .hidden {
+    #popup-password {
+      margin-bottom: 30px;
+    }
+    .close-button {
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: $text-color;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+      transition: transform 0.2s ease-in-out;
+
+      &:hover {
+        transform: scale(1.2); /* Slightly enlarge on hover for visual feedback */
+      }
+    }
+    .dots-wait-animate.hidden {
       display: none;
     }
     h2 {
@@ -95,6 +114,16 @@
         50% {
           transform: translateY(-10px);
         }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .popup {
+    .popup-content {
+      p {
+        font-size: 1rem;
       }
     }
   }

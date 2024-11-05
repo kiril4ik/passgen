@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Advanced Password Generator</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <link rel="stylesheet" href="assets/main.css">
+  <link rel="stylesheet" href="assets/dist/main.css">
 </head>
 <body>
 <nav class="navbar">
@@ -18,7 +18,7 @@
         <a href="#easy" class="nav-link">Easy Password</a>
       </li>
       <li class="nav-item">
-        <a href="#password-generator" class="nav-link">Advanced Password Generator</a>
+        <a href="#password-generator" class="nav-link">Advanced Password</a>
       </li>
       <li class="nav-item">
         <a href="#features" class="nav-link">Features</a>
@@ -38,6 +38,7 @@
   <!-- Popup Modal -->
   <div id="popup" class="popup">
     <div class="popup-content">
+      <button class="close-button" id="close-popup">&times;</button>
       <h2>Your Secure Password</h2>
       <p id="popup-password">
         <div class="dots-wait-animate">
@@ -58,9 +59,7 @@
     <div class="container">
       <h2 class="title">Advanced Password Generator</h2>
       <div class="result">
-        <div class="result__viewbox" id="result">
-          CLICK GENERATE - CLICK GENERATE
-        </div>
+        <div class="result__viewbox" id="result"></div>
         <button id="copy-btn"><i class="far fa-copy"></i></button>
       </div>
       <div class="settings">
@@ -87,27 +86,67 @@
             <label for="symbol">Symbols</label>
           </div>
         </div>
+        <div class="error-message" aria-live="polite"></div>
       </div>
       <button id="generate" class="btn generate">
         <i class="fas fa-sync-alt"></i> Generate
       </button>
     </div>
   </section>
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <h2>About</h2>
-      <p>
-        This password generator securely creates passwords on both the backend and frontend.
-        Your password is automatically copied to your clipboard when you open the website.
-      </p>
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <h2 class="features__header">Key Features</h2>
+    <div class="features__container">
+      <div class="feature">
+        <img src="assets/img/strong-password.png" alt="Strong Password Icon" class="feature__icon">
+        <h3 class="feature__title">Strong Password Generation</h3>
+        <p class="feature__description">Create highly secure, complex passwords with customizable options to keep your accounts safe.</p>
+      </div>
+      <div class="feature">
+        <img src="assets/img/backend-frontend.png" alt="Backend and Frontend Icon" class="feature__icon">
+        <h3 class="feature__title">Combined Backend and Frontend Generation</h3>
+        <p class="feature__description">Leverage advanced security with password generation processed on both frontend and backend, ensuring data safety and reducing exposure to potential threats.</p>
+      </div>
+      <div class="feature">
+        <img src="assets/img/automatic-copying.png" alt="Automatic Copying Icon" class="feature__icon">
+        <h3 class="feature__title">Automatic Password Copying</h3>
+        <p class="feature__description">Instantly copy your generated password to your clipboard for quick and easy pasting.</p>
+      </div>
+      <div class="feature">
+        <img src="assets/img/strength-meter.png" alt="Strength Meter Icon" class="feature__icon">
+        <h3 class="feature__title">Password Strength Meter</h3>
+        <p class="feature__description">Instantly see how secure your generated password is with a visual strength indicator.</p>
+      </div>
+      <div class="feature">
+        <img src="assets/img/no-storage.svg" alt="No Storage Icon" class="feature__icon">
+        <h3 class="feature__title">No Password Storage</h3>
+        <p class="feature__description">Enjoy peace of mind knowing your generated passwords are never saved on our servers.</p>
+      </div>
+      <div class="feature">
+        <img src="assets/img/mobile-friendly.png" alt="Mobile Friendly Icon" class="feature__icon">
+        <h3 class="feature__title">Mobile-Friendly Design</h3>
+        <p class="feature__description">Generate strong passwords on the go with a design optimized for smartphones and tablets.</p>
+      </div>
     </div>
+  </section>
+  <!-- About Section -->
+  <section class="about" id="about">
+      <h2 class="about__header">About This Project</h2>
+      <p class="about__text">
+        The idea for this password generator website was born out of a need for better online security. I’ve always been passionate about finding practical solutions to everyday problems, and I noticed that many people still rely on weak or reused passwords, leaving their accounts vulnerable.
+      </p>
+      <p class="about__text">
+        I wanted to create a tool that combines convenience, flexibility, and strong security features, making it easy for anyone to generate complex passwords without the hassle.
+      </p>
+      <p class="about__text">
+        With this project, I aim to help users protect their online identities and secure their accounts with reliable, randomly generated passwords.
+      </p>
   </section>
 </div>
 <footer>
   <p>&copy; Kyrylo Butskyi - 2024</p>
 </footer>
 <script src="assets/dist/zxcvbn.js"></script>
-<script src="assets/main.js"></script>
+<script src="assets/src/js/App.js" type="module"></script>
 </body>
 </html>

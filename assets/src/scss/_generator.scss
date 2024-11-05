@@ -1,7 +1,8 @@
 /* Password Generator Container */
 #password-generator {
     margin: auto;
-    background-image: linear-gradient(to top, #209cff 100%, $text-hover-color 200%);
+    background: #bcdeff;
+    //background-image: linear-gradient(to top, #209cff 100%, $text-hover-color 200%);
     overflow: auto;
 
     .container {
@@ -15,6 +16,14 @@
         0 4px 8px rgba(0, 0, 0, 0.35),
         0 8px 12px rgba(0, 0, 0, 0.15);
         color: $text-color;
+        /* Hide the container initially */
+        opacity: 0;
+        transition: opacity 1s ease-in;
+        /* Make it visible once the page loads */
+        &.fade-in {
+            opacity: 1;
+        }
+
         h2.title {
             font-size: 1.75rem;
             margin-bottom: 30px;
@@ -125,8 +134,17 @@
     .settings {
         background: rgba(255, 255, 255, 0.08);
         border-radius: 8px;
-        padding: 20px 10px 25px 10px;
+        padding: 20px 10px 0 10px;
         margin-bottom: 30px;
+
+        .error-message {
+            color: #ff4d4f;
+            font-size: 0.9rem;
+            height: 1.5em;
+            margin-top: 10px;
+            text-align: center;
+            visibility: hidden;
+        }
 
         .settings-symbols {
             position: relative;
@@ -246,5 +264,36 @@
     .btn.generate:active {
         transform: translateY(1%);
         background-color: #2e7d32;
+    }
+
+    /* Highlight effect with extended zone and rounded corners */
+    .highlight {
+        position: relative;
+        z-index: 1;
+        border-radius: 3px;
+        animation: highlightFill 1s ease-in-out;
+    }
+    @keyframes highlightFill {
+        0% {
+            box-shadow: 0 0 0 7px rgba(11, 30, 223, 0.5);
+            background-color: rgba(11, 30, 223, 0.5);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(11, 30, 223, 0.5);
+            background-color: transparent;
+        }
+    }
+}
+@media screen and (max-width: 768px) {
+    #password-generator .container {
+        margin-left: 5px;
+        margin-right: 5px;
+        max-width: calc(100% - 10px);
+        padding: 15px;
+        font-size: 0.9rem;
+
+        .result__viewbox {
+            font-size: 0.95rem;
+        }
     }
 }
