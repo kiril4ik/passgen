@@ -1,6 +1,17 @@
 export class PasswordGenerator {
     constructor(salt = '9f1d1b9e0b2b573fdd45822cd2d4f7044c6f8962cfb87e912a221d3e2f88c828') {
         this.salt = salt;
+        this.loadSalt();
+    }
+
+    async loadSalt() {
+        try {
+            const response = await fetch('salt_generator.php');
+            const data = await response.json();
+            this.salt = data.salt;
+        } catch (error) {
+            console.error('Error fetching salt:', error);
+        }
     }
 
     async generatePassword(options) {
@@ -45,6 +56,7 @@ export class PasswordGenerator {
 
         return (randomValue + (saltedInfluence % 1000) / 1000) % 1;
     }
+
 
     async hashString(str) {
         const encoder = new TextEncoder();

@@ -37,15 +37,14 @@
 
         .result__viewbox {
             width: 100%;
-            height: 65px;
+            word-break: break-word;
+            overflow-wrap: break-word;
             background: rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             color: $text-color;
             text-align: center;
-            line-height: 65px;
             font-size: 1.2rem;
-            word-break: break-all;
-            padding: 0 50px 0 10px;
+            padding: 20px 50px 20px 10px;
         }
     }
     /* Length range select */

@@ -27,6 +27,9 @@
 
     #popup-password {
       margin-bottom: 30px;
+      width: 100%;
+      word-break: break-word;
+      overflow-wrap: break-word;
     }
     .close-button {
       position: absolute;
